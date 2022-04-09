@@ -41,3 +41,6 @@ npm install -D nodemon
     "build": "tsc",
     "start": "node ./dist/app.js"
 },
+
+## Redis
+npm install redis

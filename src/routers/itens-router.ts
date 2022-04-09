@@ -1,6 +1,8 @@
 import express from 'express'
+import User from '../models/user'
+
 const itensRouter = express.Router()
-import User from '../models/user';
+const Db = require('../repository/dbConnection')
 /*
 Criar um novo usuario: POST /api/usuarios
 Ler todos os usuarios: GET /api/usuarios
@@ -12,6 +14,7 @@ Recuperar endereco por CEP: GET /api/enderecos/{cep}
 */
 
 itensRouter.post('/usuarios', (req, res) => {
+    Db.query("INSERT INTO users VALUES('Alex','0','0','0','0','0', '0')");
     res.send('Cria novo item')
 })
 
