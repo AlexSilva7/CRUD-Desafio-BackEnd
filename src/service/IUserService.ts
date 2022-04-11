@@ -1,10 +1,10 @@
 import User from "../models/user";
 interface IUserService {
-    FindByID: (id: string) => string;
-    GetAll: () => Array<User>;
+    FindByCPF: (cpf: string) => Promise<User>;
+    GetAll: () => Promise<Array<User>>;
     Create: (user: User) => void;
-    Update: (user: User) => void;
-    Delete: (id: string) => void;
+    Update: (user: User, cpf: string) => void;
+    Delete: (cpf: string) => void;
 }
 export default IUserService
 

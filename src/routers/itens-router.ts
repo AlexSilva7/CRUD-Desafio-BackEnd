@@ -1,64 +1,43 @@
+import { UserController } from '../controller/userController';
+import { UserService } from '../service/userService';
+import { AdressController } from '../controller/adressController';
+import { AdressService } from '../service/adressService';
 import express from 'express'
-import User from '../models/user'
 
-const itensRouter = express.Router()
-const Db = require('../repository/dbConnection')
-/*
-Criar um novo usuario: POST /api/usuarios
-Ler todos os usuarios: GET /api/usuarios
-Ler um usuario específico: GET /api/usuarios/{cpf}
-Atualizar um usuario: PUT /api/usuarios/{cpf}
-Apagar um usuario: DELETE /api/usuarios/{cpf}
+const itensRouter = express.Router();
+const userService = new UserService();
+const adressService = new AdressService();
+const userController = new UserController(userService);
+const adressController = new AdressController(adressService);
 
-Recuperar endereco por CEP: GET /api/enderecos/{cep}
-*/
+itensRouter.get('/users', async (req, res) => {
+    res.json(await userController.GetAllUsers());
+});
 
-itensRouter.post('/usuarios', (req, res) => {
-    Db.query("INSERT INTO users VALUES('Alex','0','0','0','0','0', '0')");
-    res.send('Cria novo item')
-})
+itensRouter.post('/users', async (req, res) => {
+    res.json(await userController.CreateUser(req.body));
+});
 
-itensRouter.get('/usuarios', (req, res) => {
-    const users: User[] = [
-        {
-            name: "Alex",
-            phone: "999999",
-            cpf: "999999",
-            adress: {
-                zipCode: "00000",
-                logradouro: "00000",
-                city: "00000",
-                state: "00000"
-            }
-        },
-        {
-            name: "Lays",
-            phone: "999999",
-            cpf: "999999",
-            adress: {
-                zipCode: "00000",
-                logradouro: "00000",
-                city: "00000",
-                state: "00000"
-            }
-        }
-    ]
-    res.json(users)
-})
-
-itensRouter.get('/usuarios/:cpf', (req, res) => {
+itensRouter.get('/users/:cpf', async (req, res) => {
     const cpf: number = +req.params.cpf
-    res.send(`Lê o item ${cpf}`)
+    res.json(await userController.GetUserByCpf(cpf.toString()));
+});
+
+itensRouter.put('/users/:cpf', async (req, res) => {
+    const cpf: number = +req.params.cpf
+    res.json(await userController.UpdateUser(req.body, cpf.toString()));
 })
 
-itensRouter.put('/usuarios/:cpf', (req, res) => {
+itensRouter.delete('/users/:cpf', async (req, res) => {
     const cpf: number = +req.params.cpf
-    res.send(`Atualiza o item ${cpf}`)
+    res.json(await userController.DeleteUser(cpf.toString()));
 })
 
-itensRouter.delete('/usuarios/:cpf', (req, res) => {
-    const cpf: number = +req.params.cpf
-    res.send(`Apaga o item ${cpf}`)
+itensRouter.get('/adress/:cep', async (req, res) => {
+    const cep: number = +req.params.cep
+    adress: Adress = await adressController.GetAdress(cep.toString())
+    if(adress == )
+    res.json();
 })
 
 export default itensRouter
