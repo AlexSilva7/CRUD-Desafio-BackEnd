@@ -8,3 +8,9 @@ services:
       POSTGRES_PASSWORD: projetouser1234
     ports:
       - 5432:5432
+
+  redis:
+    image: redis
+    command: redis-server --requirepass projetouserredis
+    ports:
+      - 6379:6379

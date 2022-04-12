@@ -11,7 +11,7 @@ export class AdressController{
     public async GetAdress(cep: string, res: any){
         try{
             let adress = await this._adressService.GetDataByCep(cep)
-            return res.json(adress)
+            return res.send(adress)
         }
         catch(error){
             console.log(error)

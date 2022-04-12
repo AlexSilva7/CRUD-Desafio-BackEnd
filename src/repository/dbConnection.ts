@@ -1,11 +1,13 @@
 const { Pool } = require('pg')
-const configDb = require('../../appsettings.json');
+var appSettings = require('../../appsettings.json');
 
-const client = new Pool({
-  user: configDb.postgres.user,
-  host: configDb.postgres.host,
-  password: configDb.postgres.password,
-  port: configDb.postgres.port,
-})
+const client = new Pool(
+  {
+    user: appSettings.postgres.user,
+    host: appSettings.postgres.host,
+    password: appSettings.postgres.password,
+    port: appSettings.postgres.port,
+  }
+)
 module.exports = client
 

@@ -4,13 +4,13 @@ npm run <script> em vez de yarn <script>
 npx <comando> em vez de yarn <comando>
 https://medium.com/@eldes.com/tutorial-aplica%C3%A7%C3%A3o-rest-api-com-node-em-typescript-usando-express-e-sqlite-a4ea6a7c3563
 
-Criar um novo usuario: POST /api/usuarios
-Ler todos os usuarios: GET /api/usuarios
-Ler um usuario específico: GET /api/usuarios/{cpf}
-Atualizar um usuario: PUT /api/usuarios/{cpf}
-Apagar um usuario: DELETE /api/usuarios/{cpf}
+Criar um novo usuario: POST /api/users
+Ler todos os usuarios: GET /api/users
+Ler um usuario específico: GET /api/users/{cpf}
+Atualizar um usuario: PUT /api/users/{cpf}
+Apagar um usuario: DELETE /api/users/{cpf}
 
-Recuperar endereco por CEP: GET /api/enderecos/{cep}
+Recuperar endereco por CEP: GET /api/adress/{cep}
 
 # Requisitos:
 ## Ferramentas necessárias sistema:
