@@ -11,33 +11,27 @@ const userController = new UserController(userService);
 const adressController = new AdressController(adressService);
 
 itensRouter.get('/users', async (req, res) => {
-    res.json(await userController.GetAllUsers());
+    await userController.GetAllUsers(res);
 });
 
 itensRouter.post('/users', async (req, res) => {
-    res.json(await userController.CreateUser(req.body));
+    await userController.CreateUser(req.body, res);
 });
 
 itensRouter.get('/users/:cpf', async (req, res) => {
-    const cpf: number = +req.params.cpf
-    res.json(await userController.GetUserByCpf(cpf.toString()));
+    await userController.GetUserByCpf(req.params.cpf.toString(), res);
 });
 
 itensRouter.put('/users/:cpf', async (req, res) => {
-    const cpf: number = +req.params.cpf
-    res.json(await userController.UpdateUser(req.body, cpf.toString()));
+    await userController.UpdateUser(req.body, req.params.cpf.toString(), res);
 })
 
 itensRouter.delete('/users/:cpf', async (req, res) => {
-    const cpf: number = +req.params.cpf
-    res.json(await userController.DeleteUser(cpf.toString()));
+    await userController.DeleteUser(req.params.cpf.toString(), res);
 })
 
 itensRouter.get('/adress/:cep', async (req, res) => {
-    const cep: number = +req.params.cep
-    adress: Adress = await adressController.GetAdress(cep.toString())
-    if(adress == )
-    res.json();
+    await adressController.GetAdress(req.params.cep.toString(), res);
 })
 
 export default itensRouter

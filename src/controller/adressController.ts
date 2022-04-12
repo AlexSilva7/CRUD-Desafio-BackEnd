@@ -8,16 +8,16 @@ export class AdressController{
         this._adressService = adressService;
     } 
 
-    public async GetAdress(cep: string){
+    public async GetAdress(cep: string, res: any){
         try{
-            let adress = await this._adressService?.GetDataByCep(cep)
-            return adress
+            let adress = await this._adressService.GetDataByCep(cep)
+            return res.json(adress)
         }
         catch(error){
             console.log(error)
-            return {
+            return res.status(400).json({
                 message : "Erro ao processar a solicitação!"
-            }
+            })
         }
     }
 }
