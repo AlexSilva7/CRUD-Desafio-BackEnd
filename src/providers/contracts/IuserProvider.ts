@@ -1,9 +1,9 @@
 import User from "../../models/user";
 
 interface IUserProvider {
-    FindUserByCPF: (cpf: string) => Promise<User>;
+    GetUserByCPF: (cpf: string) => Promise<User>;
     GetAllUsers: () => Promise<Array<User>>;
-    CreateUser: (user: User) => Promise<boolean>;
+    CreateUser: (user: User) => Promise<void>;
     UpdateUser: (user: User, cpf: string) => Promise<boolean>;
     DeleteUser: (cpf: string) => Promise<boolean>;
 }

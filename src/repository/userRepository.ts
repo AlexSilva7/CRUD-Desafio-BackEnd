@@ -7,15 +7,16 @@ export class UserRepository implements IUserRepository{
     async Create(user: User){
         await db.query('INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6, $7)',
             [user.name, user.phone, user.cpf, user.adress?.zipCode, user.adress?.logradouro, user.adress?.city, user.adress?.state]);
-        
-        return true;
     }
     
-    async Update(user: User){
-        await db.query('UPDATE users SET (name, phone, cpf, zipcode, logradouro, city, state) = ($1, $2, $3, $4, $5, $6, $7)',
-            [user.name, user.phone, user.cpf, user.adress?.zipCode, user.adress?.logradouro, user.adress?.city, user.adress?.state])
-        
-        return true;
+    async Update(user: User, cpf: string){
+        if(await db.query('UPDATE users SET (name, phone, cpf, zipcode, logradouro, city, state) = ($1, $2, $3, $4, $5, $6, $7) WHERE cpf = $3',
+            [user.name, user.phone, user.cpf, user.adress?.zipCode, 
+                user.adress?.logradouro, user.adress?.city, user.adress?.state]).rowCount == 1){
+                    return true;
+        }else{
+            return false;
+        }
     }
 
     async Delete(cpf: string){
@@ -46,7 +47,7 @@ export class UserRepository implements IUserRepository{
         return users;
     }
 
-    async GetByCPF(cpf: string){
+    async FindByCPF(cpf: string){
         var userDb = await db.query("SELECT * FROM users WHERE cpf = $1",[cpf]);
         let user: User = {
             name: userDb.rows[0].name,

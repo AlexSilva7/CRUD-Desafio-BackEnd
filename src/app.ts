@@ -34,6 +34,8 @@ app.use((req, res) => {
 })
 
 // Inicia o sevidor
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Servidor rodando com sucesso ${HOSTNAME}:${PORT}`)
 })
+
+module.exports = server

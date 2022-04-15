@@ -10,16 +10,17 @@ export class UserController{
 
     public async GetUserByCpf(cpf: string, res: any){
         try{
-            let user = await this._userProvider?.FindUserByCPF(cpf);
-            if(user.name == null){
+            let user = await this._userProvider?.GetUserByCPF(cpf);
+            if(user.name != null){
+                return res.json(user);
+            }else{
                 return res.status(400).json({
                     message: "Usuario não encontrado para este cpf!"
                 })
             }
-            return res.json(user);
         }catch(error){
             return res.status(500).json({
-                message: "Erro do servidor. Não foi possivel processar a requisição!"
+                message: "Erro do servidor. Não foi possivel processar a requisição!" + error
             })
         }
     }
@@ -27,41 +28,41 @@ export class UserController{
     public async GetAllUsers(res: any){
         try{
             return res.json(await this._userProvider?.GetAllUsers());
-        }catch{
+        }catch(error){
             res.status(500).json({
-                message: "Erro do servidor. Não foi possivel processar a requisição!"
+                message: "Erro do servidor. Não foi possivel processar a requisição! \n" + error
             })
         }
     }
 
     public async CreateUser(user: User, res: any){
         try{
-            if(await this._userProvider?.CreateUser(user)){
-                return res.json({
-                    message: "Usuario criado com sucesso!"
-                })
-            }else{
-                return res.status(400).json({
-                    message: ""
-                });
-            }
+            await this._userProvider?.CreateUser(user)
+            return res.json({
+                message: "Usuario criado com sucesso!"
+            })
         }catch(error){
             return res.status(500).json({
-                message: error
+                message: "Erro do servidor. Não foi possivel processar a requisição! \n" + error
             });
         }
     }
 
     public async UpdateUser(user: User, cpf: string, res: any){
         try{
-            await this._userProvider?.UpdateUser(user, cpf);
-            return res.json({
-                message: "Usuario atualizado com sucesso!"
-            })
+            if(await this._userProvider?.UpdateUser(user, cpf)){
+                return res.json({
+                    message: "Usuario atualizado com sucesso!"
+                });
+            }else{
+                return res.status(400).json({
+                    message: "Usuario nao encontrado para esse cpf!"
+                })
+            }
         }
-        catch{
-            return res.status(400).json({
-                message: "Usuario nao encontrado ou dados preenchidos incorretamente!"
+        catch(error){
+            return res.status(500).json({
+                message: "Erro do servidor. Não foi possivel processar a requisição! \n" + error
             });
         }
     }
@@ -78,9 +79,9 @@ export class UserController{
                 });
             }
         }
-        catch{
+        catch(error){
             return res.status(500).json({
-                message: "Erro do servidor. Não foi possivel processar a requisição!"
+                message: "Erro do servidor. Não foi possivel processar a requisição! \n" + error
             });
         }
     }

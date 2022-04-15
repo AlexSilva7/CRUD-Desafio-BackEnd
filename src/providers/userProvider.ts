@@ -3,16 +3,16 @@ import IUserRepository from "../repository/contracts/IuserReposity";
 import IUserProvider from "./contracts/IuserProvider";
 
 export class UserProvider implements IUserProvider {
-
+    
     public _db: IUserRepository;
 
     constructor(db: IUserRepository){
         this._db = db;
     }
 
-    public async FindUserByCPF(cpf: string) {
+    public async GetUserByCPF(cpf: string) {
         try{
-            return await this._db.GetByCPF(cpf); 
+            return await this._db.FindByCPF(cpf); 
         }catch{
             var user: User = {};
             return user;
@@ -20,34 +20,19 @@ export class UserProvider implements IUserProvider {
     }
 
     public async GetAllUsers(){
-        try{
-            return await this._db.GetAll();
-        }catch{
-            return Array<User>();
-        }
+        return await this._db.GetAll();
     }
 
     public async CreateUser(user: User){
-        if(await this._db.Create(user)){
-            return true;
-        }
-        return false;
+        await this._db.Create(user)
     }
 
     public async UpdateUser(user: User, cpf: string){
-        try{
-            return await this._db.Update(user, cpf);
-        }catch{
-            return false;
-        }
+        return await this._db.Update(user, cpf);
     }
 
     public async DeleteUser(cpf: string){
-        try{
-            return await this._db.Delete(cpf);
-        }catch{
-            return false;
-        }
+        return await this._db.Delete(cpf);
     }
 }
 

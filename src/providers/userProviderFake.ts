@@ -1,11 +1,11 @@
 import User from "../models/user";
 import IUserProvider from "./contracts/IuserProvider";
-
+    /*
 export class UserProviderFake implements IUserProvider {
-    
+
     public _dbFake = Array<User>();
 
-    public async FindByCPF(cpf: string) {
+    public async GetUserByCPF(cpf: string) {
         var user: User;
         for(var x = 0; x < this._dbFake.length; x++){
             if(this._dbFake[x].cpf == cpf){
@@ -15,21 +15,22 @@ export class UserProviderFake implements IUserProvider {
         return user = {};
     }
 
-    public async GetAll(){
+    public async GetAllUsers(){
         var users = Array<User>();
         return users;
     }
 
-    public async Create(user: User){
+    public async CreateUser(user: User){
         return true;
     }
 
-    public async Update(user: User){
+    public async UpdateUser(user: User){
         return true;
     }
 
-    public async Delete(cpf: string){
+    public async DeleteUser(cpf: string){
         return true;
     }
+    
 }
-
+*/
