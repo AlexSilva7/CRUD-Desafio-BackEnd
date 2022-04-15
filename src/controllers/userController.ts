@@ -1,16 +1,16 @@
 import User from "../models/user";
-import IUserService from "../service/IUserService";
+import IUserProvier from "../providers/contracts/IuserProvider";
 
 export class UserController{
-    public _userService: IUserService;
+    public _userProvider: IUserProvier;
 
-    constructor(userService: IUserService){
-        this._userService = userService;
+    constructor(userProvider: IUserProvier){
+        this._userProvider = userProvider;
     }
 
     public async GetUserByCpf(cpf: string, res: any){
         try{
-            let user = await this._userService?.FindByCPF(cpf);
+            let user = await this._userProvider?.FindUserByCPF(cpf);
             if(user.name == null){
                 return res.status(400).json({
                     message: "Usuario não encontrado para este cpf!"
@@ -26,7 +26,7 @@ export class UserController{
 
     public async GetAllUsers(res: any){
         try{
-            return res.json(await this._userService?.GetAll());
+            return res.json(await this._userProvider?.GetAllUsers());
         }catch{
             res.status(500).json({
                 message: "Erro do servidor. Não foi possivel processar a requisição!"
@@ -36,12 +36,17 @@ export class UserController{
 
     public async CreateUser(user: User, res: any){
         try{
-            await this._userService?.Create(user);
-            return res.json({
-                message: "Usuario criado com sucesso!"
-            })
+            if(await this._userProvider?.CreateUser(user)){
+                return res.json({
+                    message: "Usuario criado com sucesso!"
+                })
+            }else{
+                return res.status(400).json({
+                    message: ""
+                });
+            }
         }catch(error){
-            return res.status(400).json({
+            return res.status(500).json({
                 message: error
             });
         }
@@ -49,7 +54,7 @@ export class UserController{
 
     public async UpdateUser(user: User, cpf: string, res: any){
         try{
-            await this._userService?.Update(user, cpf);
+            await this._userProvider?.UpdateUser(user, cpf);
             return res.json({
                 message: "Usuario atualizado com sucesso!"
             })
@@ -63,7 +68,7 @@ export class UserController{
 
     public async DeleteUser(cpf: string, res: any){
         try{
-            if(await this._userService?.Delete(cpf)){
+            if(await this._userProvider?.DeleteUser(cpf)){
                 return res.json({
                     message: "Usuario deletado com sucesso!"
                 });

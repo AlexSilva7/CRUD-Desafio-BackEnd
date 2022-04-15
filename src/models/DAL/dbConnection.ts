@@ -1,5 +1,5 @@
 const { Pool } = require('pg')
-var appSettings = require('../../appsettings.json');
+var appSettings = require('../../../appsettings.json');
 
 const client = new Pool(
   {

@@ -1,9 +1,17 @@
 import User from "../models/user";
-import IUserService from "./IUserService";
+import IUserProvider from "./contracts/IuserProvider";
 
-export class UserServiceFake implements IUserService {
+export class UserProviderFake implements IUserProvider {
+    
+    public _dbFake = Array<User>();
+
     public async FindByCPF(cpf: string) {
         var user: User;
+        for(var x = 0; x < this._dbFake.length; x++){
+            if(this._dbFake[x].cpf == cpf){
+                return this._dbFake[x];
+            }
+        }
         return user = {};
     }
 

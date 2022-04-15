@@ -1,6 +1,6 @@
 const redis = require ("redis");
 const { promisify } = require ("util");
-var appSettings = require('../../appsettings.json');
+var appSettings = require('../../../appsettings');
 
 const redisClient = redis.createClient (
   { 

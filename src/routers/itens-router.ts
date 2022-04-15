@@ -1,14 +1,16 @@
-import { UserController } from '../controller/userController';
-import { UserService } from '../service/userService';
-import { AdressController } from '../controller/adressController';
-import { AdressService } from '../service/adressService';
+import { UserController } from '../controllers/userController';
+import { UserProvider } from '../providers/userProvider';
+import { AdressController } from '../controllers/adressController';
+import { AdressProvider } from '../providers/adressProvider';
+import { UserRepository } from '../repository/userRepository';
 import express from 'express'
 
 const itensRouter = express.Router();
-const userService = new UserService();
-const adressService = new AdressService();
-const userController = new UserController(userService);
-const adressController = new AdressController(adressService);
+const userRepository = new UserRepository();
+const userProvider = new UserProvider(userRepository);
+const adressProvider = new AdressProvider();
+const userController = new UserController(userProvider);
+const adressController = new AdressController(adressProvider);
 
 itensRouter.get('/users', async (req, res) => {
     await userController.GetAllUsers(res);

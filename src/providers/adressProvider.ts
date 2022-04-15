@@ -1,9 +1,9 @@
 import Adress from "../models/adress";
-import IAdressService from "./IAdressService";
+import IAdressProvider from "./contracts/IadressProvider";
 const got = require('got');
-const redis = require('../repository/cacheViaCep');
+const redis = require('../models/DAL/redisConnection');
 
-export class AdressService implements IAdressService {
+export class AdressProvider implements IAdressProvider {
 
     public async GetDataByCep(cep: string){
         
@@ -24,4 +24,5 @@ export class AdressService implements IAdressService {
         redis.set(cep, JSON.stringify(adress));
         return adress;
     }
+    
 }

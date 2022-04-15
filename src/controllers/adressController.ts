@@ -1,16 +1,15 @@
-import { json } from "stream/consumers";
-import IAdressService from "../service/IAdressService";
+import IAdressProvider from "../providers/contracts/IadressProvider";
 
 export class AdressController{
-    public _adressService: IAdressService;
+    public _adressProvider: IAdressProvider;
 
-    constructor(adressService: IAdressService){
-        this._adressService = adressService;
+    constructor(adressProvider: IAdressProvider){
+        this._adressProvider = adressProvider;
     } 
 
     public async GetAdress(cep: string, res: any){
         try{
-            let adress = await this._adressService.GetDataByCep(cep)
+            let adress = await this._adressProvider.GetDataByCep(cep)
             return res.send(adress)
         }
         catch(error){
