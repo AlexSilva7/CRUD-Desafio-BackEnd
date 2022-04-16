@@ -1,7 +1,7 @@
 import Adress from "../models/adress";
 import IAdressProvider from "./contracts/IadressProvider";
 const got = require('got');
-const redis = require('../models/DAL/redisConnection');
+const redis = require('../models/connections/redisConnection');
 
 export class AdressProvider implements IAdressProvider {
 

@@ -1,16 +1,16 @@
 import User from "../models/user";
-import IUserProvier from "../providers/contracts/IuserProvider";
+import IUserProvider from "../providers/contracts/IuserProvider";
 
 export class UserController{
-    public _userProvider: IUserProvier;
+    public _userProvider: IUserProvider;
 
-    constructor(userProvider: IUserProvier){
+    constructor(userProvider: IUserProvider){
         this._userProvider = userProvider;
     }
 
-    public async GetUserByCpf(cpf: string, res: any){
+    public async GetUserByCpf(req: any, res: any){
         try{
-            let user = await this._userProvider?.GetUserByCPF(cpf);
+            let user = await this._userProvider?.GetUserByCPF(req.params.cpf);
             if(user.name != null){
                 return res.json(user);
             }else{
@@ -25,7 +25,7 @@ export class UserController{
         }
     }
 
-    public async GetAllUsers(res: any){
+    public async GetAllUsers(req: any, res: any){
         try{
             return res.json(await this._userProvider?.GetAllUsers());
         }catch(error){
@@ -35,9 +35,9 @@ export class UserController{
         }
     }
 
-    public async CreateUser(user: User, res: any){
+    public async CreateUser(req: any, res: any){
         try{
-            await this._userProvider?.CreateUser(user)
+            await this._userProvider?.CreateUser(req.body)
             return res.json({
                 message: "Usuario criado com sucesso!"
             })
@@ -48,9 +48,9 @@ export class UserController{
         }
     }
 
-    public async UpdateUser(user: User, cpf: string, res: any){
+    public async UpdateUser(req: any, res: any){
         try{
-            if(await this._userProvider?.UpdateUser(user, cpf)){
+            if(await this._userProvider?.UpdateUser(req.body, req.params.cpf)){
                 return res.json({
                     message: "Usuario atualizado com sucesso!"
                 });
@@ -67,9 +67,9 @@ export class UserController{
         }
     }
 
-    public async DeleteUser(cpf: string, res: any){
+    public async DeleteUser(req: any, res: any){
         try{
-            if(await this._userProvider?.DeleteUser(cpf)){
+            if(await this._userProvider?.DeleteUser(req.params.cpf)){
                 return res.json({
                     message: "Usuario deletado com sucesso!"
                 });

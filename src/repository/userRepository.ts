@@ -1,6 +1,6 @@
 import User from "../models/user";
 import IUserRepository from "./contracts/IuserReposity";
-const db = require('../models/DAL/dbConnection');
+const db = require('../models/connections/dbConnection');
 
 export class UserRepository implements IUserRepository{
 
@@ -10,17 +10,20 @@ export class UserRepository implements IUserRepository{
     }
     
     async Update(user: User, cpf: string){
-        if(await db.query('UPDATE users SET (name, phone, cpf, zipcode, logradouro, city, state) = ($1, $2, $3, $4, $5, $6, $7) WHERE cpf = $3',
+        let updateUser =await db.query('UPDATE users SET (name, phone, cpf, zipcode, logradouro, city, state) = ($1, $2, $3, $4, $5, $6, $7) WHERE cpf = $3',
             [user.name, user.phone, user.cpf, user.adress?.zipCode, 
-                user.adress?.logradouro, user.adress?.city, user.adress?.state]).rowCount == 1){
-                    return true;
+                user.adress?.logradouro, user.adress?.city, user.adress?.state])
+
+        if(updateUser.rowCount == 1){
+            return true;
         }else{
             return false;
         }
     }
 
     async Delete(cpf: string){
-        if(await db.query('DELETE FROM users WHERE cpf = $1',[cpf]).rowCount == 1){
+        let deleteUser = await db.query('DELETE FROM users WHERE cpf = $1',[cpf])
+        if(deleteUser.rowCount == 1){
             return true;
         }else{
             return false;

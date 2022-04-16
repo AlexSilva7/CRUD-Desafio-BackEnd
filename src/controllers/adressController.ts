@@ -7,13 +7,12 @@ export class AdressController{
         this._adressProvider = adressProvider;
     } 
 
-    public async GetAdress(cep: string, res: any){
+    public async GetAdress(req: any, res: any){
         try{
-            let adress = await this._adressProvider.GetDataByCep(cep)
+            let adress = await this._adressProvider.GetDataByCep(req.params.cep)
             return res.send(adress)
         }
         catch(error){
-            console.log(error)
             return res.status(400).json({
                 message : "Erro ao processar a solicitação!"
             })

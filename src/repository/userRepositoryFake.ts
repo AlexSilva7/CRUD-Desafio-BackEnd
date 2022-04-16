@@ -3,16 +3,26 @@ import IUserRepository from "./contracts/IuserReposity";
 
 export class UserRepositoryFake implements IUserRepository{
 
-    public _db = Array<User>();
+    public static _db = Array<User>();
 
     async Create(user: User){
-        this._db.push(user);
+        if(user.name == null || user.cpf == null || user.phone == null ||
+            user.adress?.city == null || user.adress.zipCode == null || 
+            user.adress.logradouro == null|| user.adress.state == null){
+                return;
+        }
+        UserRepositoryFake._db.push(user);
     }
     
     async Update(user: User, cpf: string){
-        for(var i = 0; i < this._db.length; i++){
-            if(this._db[i].cpf == cpf){
-                this._db[i] = user;
+        if(user.name == null || user.cpf == null || user.phone == null ||
+            user.adress?.city == null || user.adress.zipCode == null || 
+            user.adress.logradouro == null || user.adress.state == null){
+                return false;
+        }
+        for(var i = 0; i < UserRepositoryFake._db.length; i++){
+            if(UserRepositoryFake._db[i].cpf == cpf){
+                UserRepositoryFake._db[i] = user;
                 return true;
             }
         }
@@ -20,9 +30,9 @@ export class UserRepositoryFake implements IUserRepository{
     }
 
     async Delete(cpf: string){
-        for(var i = 0; i < this._db.length; i++){
-            if(this._db[i].cpf == cpf){
-                this._db.splice(i, 1)
+        for(var i = 0; i < UserRepositoryFake._db.length; i++){
+            if(UserRepositoryFake._db[i].cpf == cpf){
+                UserRepositoryFake._db.splice(i, 1)
                 return true;
             }
         }
@@ -30,13 +40,13 @@ export class UserRepositoryFake implements IUserRepository{
     }
 
     async GetAll(){
-        return this._db;
+        return UserRepositoryFake._db;
     }
 
     async FindByCPF(cpf: string){
-        for(var i = 0; i < this._db.length; i++){
-            if(this._db[i].cpf == cpf){
-                return this._db[i];
+        for(var i = 0; i < UserRepositoryFake._db.length; i++){
+            if(UserRepositoryFake._db[i].cpf == cpf){
+                return UserRepositoryFake._db[i];
             }
         }
         let user: User = {};
