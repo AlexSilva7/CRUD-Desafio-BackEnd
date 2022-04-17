@@ -5,6 +5,7 @@ import { AdressProvider } from '../providers/adressProvider';
 import { UserRepository } from '../repository/userRepository';
 import express from 'express'
 import { AdressRepository } from '../repository/adressRepository';
+import { AuthController } from '../controllers/auth';
 
 const itensRouter = express.Router();
 
@@ -22,5 +23,7 @@ itensRouter.get('/users/:cpf', async (req, res) => userController.GetUserByCpf(r
 itensRouter.put('/users/:cpf', async (req, res) => userController.UpdateUser(req, res));
 itensRouter.delete('/users/:cpf', async (req, res) => userController.DeleteUser(req, res));
 itensRouter.get('/adress/:cep', async (req, res) => adressController.GetAdress(req, res));
+
+itensRouter.post('/auth', async(req, res) => new AuthController().Sign(req, res))
 
 export default itensRouter
