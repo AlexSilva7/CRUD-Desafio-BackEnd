@@ -4,13 +4,16 @@ import { AdressController } from '../controllers/adressController';
 import { AdressProvider } from '../providers/adressProvider';
 import { UserRepository } from '../repository/userRepository';
 import express from 'express'
+import { AdressRepository } from '../repository/adressRepository';
 
 const itensRouter = express.Router();
 
 const userRepository = new UserRepository();
 const userProvider = new UserProvider(userRepository);
 const userController = new UserController(userProvider);
-const adressProvider = new AdressProvider();
+
+const adressRepository = new AdressRepository();
+const adressProvider = new AdressProvider(adressRepository);
 const adressController = new AdressController(adressProvider);
 
 itensRouter.get('/users', async (req, res) => userController.GetAllUsers(req, res));

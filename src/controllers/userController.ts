@@ -1,8 +1,7 @@
-import User from "../models/user";
-import IUserProvider from "../providers/contracts/IuserProvider";
+import { IUserProvider } from "../providers/contracts/IuserProvider";
 
 export class UserController{
-    public _userProvider: IUserProvider;
+    public readonly _userProvider;
 
     constructor(userProvider: IUserProvider){
         this._userProvider = userProvider;
@@ -25,9 +24,9 @@ export class UserController{
         }
     }
 
-    public async GetAllUsers(req: any, res: any){
+    public async GetAllUsers (req: any, res: any){
         try{
-            return res.json(await this._userProvider?.GetAllUsers());
+            return res.json(await this._userProvider.GetAllUsers());
         }catch(error){
             res.status(500).json({
                 message: "Erro do servidor. Não foi possivel processar a requisição! \n" + error

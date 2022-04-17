@@ -1,7 +1,7 @@
-import IAdressProvider from "../providers/contracts/IadressProvider";
+import { IAdressProvider } from "../providers/contracts/IadressProvider";
 
 export class AdressController{
-    public _adressProvider: IAdressProvider;
+    public readonly _adressProvider: IAdressProvider;
 
     constructor(adressProvider: IAdressProvider){
         this._adressProvider = adressProvider;

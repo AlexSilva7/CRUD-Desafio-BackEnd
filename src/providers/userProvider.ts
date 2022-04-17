@@ -1,6 +1,6 @@
 import User from "../models/user";
-import IUserRepository from "../repository/contracts/IuserReposity";
-import IUserProvider from "./contracts/IuserProvider";
+import { IUserRepository } from "../repository/contracts/IuserReposity";
+import { IUserProvider } from "./contracts/IuserProvider";
 
 export class UserProvider implements IUserProvider {
     

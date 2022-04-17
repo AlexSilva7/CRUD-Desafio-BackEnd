@@ -1,17 +1,23 @@
 import Adress from "../models/adress";
-import IAdressProvider from "./contracts/IadressProvider";
+import { IAdressRepository } from "../repository/contracts/IadresRepository";
+import { IAdressProvider } from "./contracts/IadressProvider";
 const got = require('got');
-const redis = require('../models/connections/redisConnection');
+var appSettings = require('../../appsettings');
 
 export class AdressProvider implements IAdressProvider {
+    private readonly _db: IAdressRepository;
+
+    constructor(db: IAdressRepository){
+        this._db = db;
+    }
 
     public async GetDataByCep(cep: string){
         
-        if(await redis.get(cep) != null){
-            return(await redis.get(cep));
+        if(await this._db.GetAdress(cep) != null){
+            return(await this._db.GetAdress(cep));
         }
 
-        var url = 'https://viacep.com.br/ws/' + cep + '/json/';
+        var url = appSettings.baseUrlAdress + cep + '/json/';
         const response = await got(url, { json: true });
 
         var adress: Adress = {
@@ -21,7 +27,7 @@ export class AdressProvider implements IAdressProvider {
             state: response.body["uf"],
         }
         
-        redis.set(cep, JSON.stringify(adress));
+        this._db.SetAdress(cep, adress);
         return adress;
     }
     

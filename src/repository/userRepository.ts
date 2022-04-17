@@ -1,5 +1,5 @@
 import User from "../models/user";
-import IUserRepository from "./contracts/IuserReposity";
+import { IUserRepository } from "./contracts/IuserReposity";
 const db = require('../models/connections/dbConnection');
 
 export class UserRepository implements IUserRepository{
