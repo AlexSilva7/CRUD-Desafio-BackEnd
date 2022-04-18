@@ -1,4 +1,9 @@
 
+/*
+user: "Admin",
+password: "DesafioBackEnd"
+*/
+
 # App desenvolvido em Typescript com NodeJs
 ## Endpoints
 Criar um novo usuario: POST /api/users
@@ -13,6 +18,7 @@ Recuperar endereco por CEP: GET /api/adress/{cep}
 npm install
 
 ## Para rodar o App
+docker-compose up -d (Para subir o Postgres e o Redis)
 npm run dev
 
 ## Para rodar os Testes
@@ -22,6 +28,7 @@ npm run test
 # Outras informações:
 ## Requisitos:
 ## Ferramentas necessárias sistema:
+Docker
 Node.js
 Typescript compiler (tsc)
 

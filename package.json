@@ -1,7 +1,7 @@
 {
   "name": "projeto_backend",
   "version": "1.0.0",
-  "description": "npm init em vez de yarn init\r npm install <módulo> em vez de yarn add <módulo>\r npm run <script> em vez de yarn <script>\r npx <comando> em vez de yarn <comando>\r https://medium.com/@eldes.com/tutorial-aplica%C3%A7%C3%A3o-rest-api-com-node-em-typescript-usando-express-e-sqlite-a4ea6a7c3563",
+  "description": "Projeto cadastro de usuarios",
   "main": "app.ts",
   "scripts": {
     "dev": "ts-node ./src/app.ts",
