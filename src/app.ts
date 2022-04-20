@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import itensRouter from './routers/itens-router'
+const db = require('./models/connections/dbConnection');
 
 // Porta do servidor
 const PORT = process.env.PORT || 3000
@@ -27,6 +28,9 @@ app.use(cors({
 app.use((req, res) => {
     res.status(404)
 })
+
+//Cria a tabela se nao existe
+db.query("CREATE TABLE IF NOT EXISTS public.users ( name VARCHAR(100) NOT NULL, phone VARCHAR(20) NOT NULL, cpf VARCHAR(15) PRIMARY KEY NOT NULL, zipCode VARCHAR(20) NOT NULL, logradouro VARCHAR(255) NOT NULL, city VARCHAR(50) NOT NULL, state VARCHAR(50) NOT NULL, creation_date TIMESTAMP NOT NULL DEFAULT Current_date)");
 
 // Inicia o sevidor
 const server = app.listen(PORT, () => {

@@ -10,9 +10,9 @@ export class UserRepository implements IUserRepository{
     }
     
     async Update(user: User, cpf: string){
-        let updateUser =await db.query('UPDATE users SET (name, phone, cpf, zipcode, logradouro, city, state) = ($1, $2, $3, $4, $5, $6, $7) WHERE cpf = $3',
+        let updateUser =await db.query('UPDATE users SET (name, phone, cpf, zipcode, logradouro, city, state) = ($1, $2, $3, $4, $5, $6, $7) WHERE cpf = $8',
             [user.name, user.phone, user.cpf, user.adress?.zipCode, 
-                user.adress?.logradouro, user.adress?.city, user.adress?.state])
+                user.adress?.logradouro, user.adress?.city, user.adress?.state, cpf])
 
         if(updateUser.rowCount == 1){
             return true;
