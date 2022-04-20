@@ -1,18 +1,28 @@
 
-/*
-user: "Admin",
-password: "DesafioBackEnd"
-*/
-
 # App desenvolvido em Typescript com NodeJs
 ## Endpoints
+Para acessar todos os Endpoints do app deve se enviar um post na autenticação 
+passando um body o seguinte adminFake
+{
+    user: "Admin",
+    password: "DesafioBackEnd"
+},
+o token gerado deve ser usado no header[x-access-token] da requisição aos outros endpoints 
+
+Autenticação: POST /api/auth
+
 Criar um novo usuario: POST /api/users
+
 Ler todos os usuarios: GET /api/users
+
 Ler um usuario específico: GET /api/users/{cpf}
+
 Atualizar um usuario: PUT /api/users/{cpf}
+
 Apagar um usuario: DELETE /api/users/{cpf}
 
 Recuperar endereco por CEP: GET /api/adress/{cep}
+
 
 ## Para instalar todas as dependencias
 npm install
@@ -23,7 +33,6 @@ npm run dev
 
 ## Para rodar os Testes
 npm run test
-
 
 # Outras informações:
 ## Requisitos:
