@@ -24,12 +24,16 @@ Apagar um usuario: DELETE /api/users/{cpf}
 Recuperar endereco por CEP: GET /api/adress/{cep}
 
 
+
 ## Para instalar todas as dependencias
 npm install
 
+
 ## Para rodar o App
 docker-compose up -d (Para subir o Postgres e o Redis)
+
 npm run dev
+
 
 ## Para rodar os Testes
 npm run test
