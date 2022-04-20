@@ -23,12 +23,12 @@ const authRepository = new AuthRepositoryFake();
 const authProvider = new AuthProvider(authRepository);
 const authController = new AuthController(authProvider);
 
-itensRouter.get('/users', async (req, res) => userController.GetAllUsers(req, res));
-itensRouter.post('/users', async (req, res) => userController.CreateUser(req, res));
-itensRouter.get('/users/:cpf', async (req, res) => userController.GetUserByCpf(req, res));
-itensRouter.put('/users/:cpf', async (req, res) => userController.UpdateUser(req, res));
-itensRouter.delete('/users/:cpf', async (req, res) => userController.DeleteUser(req, res));
-itensRouter.get('/adress/:cep', async (req, res) => adressController.GetAdress(req, res));
+itensRouter.get('/users', authController.verifyJWT, async (req, res) => userController.GetAllUsers(req, res));
+itensRouter.post('/users', authController.verifyJWT, async (req, res) => userController.CreateUser(req, res));
+itensRouter.get('/users/:cpf', authController.verifyJWT, async (req, res) => userController.GetUserByCpf(req, res));
+itensRouter.put('/users/:cpf', authController.verifyJWT, async (req, res) => userController.UpdateUser(req, res));
+itensRouter.delete('/users/:cpf', authController.verifyJWT, async (req, res) => userController.DeleteUser(req, res));
+itensRouter.get('/adress/:cep', authController.verifyJWT, async (req, res) => adressController.GetAdress(req, res));
 itensRouter.post('/auth', async(req, res) => authController.Sign(req, res))
 
 export default itensRouter

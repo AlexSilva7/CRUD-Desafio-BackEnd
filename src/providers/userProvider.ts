@@ -3,7 +3,6 @@ import { IUserRepository } from "../repository/contracts/IuserReposity";
 import { IUserProvider } from "./contracts/IuserProvider";
 
 export class UserProvider implements IUserProvider {
-    
     public _db: IUserRepository;
 
     constructor(db: IUserRepository){

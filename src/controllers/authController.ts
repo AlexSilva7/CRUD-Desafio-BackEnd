@@ -1,3 +1,4 @@
+import { nextTick } from "process";
 import { IAuthProvider } from "../providers/contracts/IauthProvider"
 var jwt = require('jsonwebtoken')
 const appSettings = require('../../appsettings.json')
@@ -11,16 +12,15 @@ export class AuthController{
     }
 
     public async Sign(req: any, res: any){
-
       var auth = await this._provider.GetAuth(req.body.user, req.body.password)
-
+      
       if(auth){
-        var token = jwt.sign(req.body.user, appSettings.tokenSecret, {
-          expiresIn: '1440m'
-        }) // Aqui dizemos que o Token expira em 1440 minutos (24 hrs)
+        var token = jwt.sign({id:req.body.user}, appSettings.tokenSecret, {
+          expiresIn: '20m'
+        }); // Aqui dizemos que o Token expira em 20 minutos
   
         // Retornamos um json dizendo que deu certo junto com o seu Token
-        return res.json({
+        res.json({
           success: true,
           message: 'Authentication sucessfull!',
           token: token
@@ -30,23 +30,23 @@ export class AuthController{
             message: 'Authentication not sucessfull!'
           });
       }
-      
     }
+
+    public verifyJWT(req: any, res: any, next: any){
+      const token = req.headers['x-access-token'];
+      if (!token) return res.status(401).json({ auth: false, message: 'No token provided.' });
+      
+      try{
+        jwt.verify(token, appSettings.tokenSecret, function(err: any, decoded: any) {
+          if (err) return res.status(500).json({ auth: false, message: 'Failed to authenticate token.' });
+          
+          // se tudo estiver ok, salva no request para uso posterior
+          req.id = decoded.id;
+          next();
+        });
+      }catch(error){
+        res.status(400).json({ message: error });
+      }
+  }
 }
 
-/*
-//authentication
-app.post('/auth', (req, res) => {
-  //esse teste abaixo deve ser feito no seu banco de dados
-  if(req.body.user === 'luiz' && req.body.password === '123'){
-    //auth ok
-    const id = 1; //esse id viria do banco de dados
-    const token = jwt.sign({ id }, appSettings.secret, {
-      expiresIn: 300 // expires in 5min
-    });
-    return res.json({ auth: true, token: token });
-  }
-  
-  res.status(500).json({message: 'Login inválido!'});
-})
-*/
